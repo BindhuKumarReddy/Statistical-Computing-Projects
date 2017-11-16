@@ -1,0 +1,83 @@
+b=rnorm(100,mean=100,sd=10)
+hist(b)
+length(b[b>=90&b<=110])
+length(b[b>=80&b<=120])
+length(b[b>=70&b<=130])
+# problem 2
+install.packages("abd")
+library("abd")
+data(TwoKids)
+pie(TwoKids$count,labels=TwoKids$num.boys,main="Pie chart of Twokids")
+# problem 3
+data1<-read.csv("C:\\Users\\pbkr\\Downloads\\airmay.csv")
+data1<-na.omit(data1)
+summary(data1)
+summary(data1$X)
+summary(data1$X1)
+summary(data1$X2)
+summary(data1$X3)
+summary(data1$Y)
+par(mfrow=c(2,3))
+hist(data1$X)
+hist(data1$X1)
+hist(data1$X2)
+hist(data1$X3)
+hist(data1$Y)
+x<-t.test(data1$Y,conf.level=0.9)
+paste(x$conf.int)
+# problem 4
+disea<-read.table("C:\\Users\\pbkr\\Desktop\\file_math.txt",header=T)
+boxplot(disea$Survival~disea$Organ,data=disea,main="Survival time of w.r.t each type of cancer")
+summary(subset(disea$Survival,disea$Organ=="Breast"))
+summary(subset(disea$Survival,disea$Organ=="Bronchus"))
+summary(subset(disea$Survival,disea$Organ=="Colon"))
+summary(subset(disea$Survival,disea$Organ=="Ovary"))
+summary(subset(disea$Survival,disea$Organ=="Stomach"))
+# problem 5
+dim(PlantGrowth)
+install.packages("dplyr")
+library(dplyr)
+a<-aggregate(PlantGrowth$weight,list(PlantGrowth$group),mean)
+names(a)<-c("group","mean")
+trt1<-subset(PlantGrowth$weight,PlantGrowth$group=="trt1")
+trt2<-subset(PlantGrowth$weight,PlantGrowth$group=="trt2")
+t.test(trt1,trt2,alt="greater")
+paste("we fail to reject the hypothesis since p-value is greater than alpha")
+# problem 6
+install.packages("RSADBE")
+library("RSADBE")
+attach(Gasoline)
+names(Gasoline)
+avg_auto<-Gasoline[which(Gasoline$x11=="A"),]
+avg_man<-Gasoline[which(Gasoline$x11=="M"),]
+
+t.test(avg_man$y,avg_auto$y,alt="greater")
+# problem 7
+library("UsingR")
+attach(babies)
+t.test(dage,age,alt="greater")
+paste("p-value is less than alpha so we reject the null hypothesis")
+# problem 8
+noshow<-read.csv("C:\\Users\\pbkr\\Downloads\\Noshow.csv")
+dim(noshow)
+names(noshow)
+boxplot(Age~Gender,data=noshow)
+f<-subset(noshow$No.show,noshow$Gender=="F")
+m<-subset(noshow$No.show,noshow$Gender=="M")
+sum(m=="Yes")
+sum(f=="Yes")
+noshow_female<-sum(f=="Yes")
+noshow_male<-sum(m=="Yes")
+total_male<-length(m)
+total_female<-length(f)
+prop.test(x=c(noshow_female,noshow_male),n=c(total_female,total_male),alt="greater")
+paste("since p-value is greater than alpha we fail to reject the null hypothesis")
+xtabs(~No.show+SMS_received,data=noshow)
+prop.test(c(25698,62510),n=c(25698+9784,62510+12535),alt="greater")
+paste("since p-value is greater than alpha we fail to reject the null hypothesis")
+# for all the hypothesis tests
+paste("we look at the p-value and if p-value is less than the alpha value we reject the null hypothesis.If p-value is greater than alpha value we say that we dont have any evidence to reject the null hypothesis")
+
+
+
+
